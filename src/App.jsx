@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import MovieList from './MovieList';
+import Filter from './Filter';
+import AddMovie from './AddMovie';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [movies, setMovies] = useState([
+    {
+      title: "Inception",
+      description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+      posterURL: "https://i.pinimg.com/564x/0b/8a/b0/0b8ab0f39accf5ee9efc1ca77cc8d3c2.jpg",
+      rating: 9
+    },
+    {
+      title: "The Matrix",
+      description: "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+      posterURL: "https://i.pinimg.com/564x/ed/45/16/ed4516338fa5df348c13a2a7ce1e7998.jpg",
+      rating: 8
+    },
+    // Add more initial movies here
+  ]);
+
+  const [titleFilter, setTitleFilter] = useState('');
+  const [ratingFilter, setRatingFilter] = useState('');
+
+  const addMovie = (newMovie) => {
+    setMovies([...movies, newMovie]);
+  };
+
+  const filteredMovies = movies.filter(movie =>
+    movie.title.toLowerCase().includes(titleFilter.toLowerCase()) &&
+    (ratingFilter === '' || movie.rating >= ratingFilter)
+  );
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <header className="App-header">
+        <h1>Movie App</h1>
+        <Filter setTitleFilter={setTitleFilter} setRatingFilter={setRatingFilter} />
+        <AddMovie addMovie={addMovie} />
+        <MovieList movies={filteredMovies} />
+      </header>
+    </div>
+  );
 }
 
-export default App
+export default App;
