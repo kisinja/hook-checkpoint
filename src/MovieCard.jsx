@@ -7,7 +7,7 @@ const MovieCard = ({ title, description, posterURL, rating }) => {
         <Card style={{ width: '18rem', margin: '1rem' }} id='movie'>
             <Card.Img variant="top" src={posterURL} />
             <Card.Body>
-                <Card.Title>{title}</Card.Title>
+                <Card.Title id='title'>{title}</Card.Title>
                 <Card.Text>{description}</Card.Text>
                 <Card.Text><strong>Rating:</strong> {rating}</Card.Text>
             </Card.Body>
